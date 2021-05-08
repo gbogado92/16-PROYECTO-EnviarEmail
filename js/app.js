@@ -1,8 +1,9 @@
 
 
 //  Variables 
-const BtnEnviar = document.querySelector('#enviar');
-const formulario = document.querySelector('#enviar-mail')
+const btnEnviar = document.querySelector('#enviar');
+const btnReset = document.querySelector('#resetBtn');
+const formulario = document.querySelector('#enviar-mail');
 
 // Variables para campos 
 const email = document.querySelector('#email');
@@ -20,13 +21,19 @@ function eventListeners() {
     email.addEventListener('blur', validarFormulario);
     asunto.addEventListener('blur', validarFormulario);
     mensaje.addEventListener('blur', validarFormulario);
+
+    //  Reinicia el formulario 
+    btnReset.addEventListener('click', resetearFormulario);
+
+    //  Enviar mail 
+    formulario.addEventListener('submit', enviarEmail);
 }
 
 //  Funciones 
 
 function iniciarApp() {
-   BtnEnviar.disabled = true;
-   BtnEnviar.classList.add('cursor-not-allowed', 'opacity-50');
+   btnEnviar.disabled = true;
+   btnEnviar.classList.add('cursor-not-allowed', 'opacity-50');
 }
 
 //  Valida el formulario 
@@ -67,8 +74,8 @@ function validarFormulario(e) {
     }
 
     if ( er.test( email.value ) && asunto.value !== '' && mensaje.value !== '' ) {
-        BtnEnviar.disabled = false;
-        BtnEnviar.classList.remove('cursor-not-allowed', 'opacity-50');
+        btnEnviar.disabled = false;
+        btnEnviar.classList.remove('cursor-not-allowed', 'opacity-50');
     }
 }
 
@@ -81,4 +88,42 @@ function mostrarError(mensaje) {
     if(errores.length === 0) {
     formulario.appendChild(mensajeError);
     }
+}
+
+//  Envía el email 
+
+function enviarEmail(e) {
+    e.preventDefault();
+
+    //  Mostrar el spinner 
+
+    const spinner = document.querySelector('#spinner');
+    spinner.style.display = 'flex';
+
+    //  Despues de 3 segundos ocultar el spinner y mostrar el mensaje 
+    setTimeout( () => {
+        spinner.style.display = 'none';
+
+        //  Mensaje que dice que se envió correctamente 
+        const parrafo = document.createElement('p');
+        parrafo.textContent = 'El mensaje se envió correctamente';
+        parrafo.classList.add('text-center', 'my-10', 'p-2', 'bg-green-500', 'text-white', 'font-bold', 'uppercase' );
+
+        // Inserta el párrafo antes del spinner 
+        formulario.insertBefore(parrafo, spinner);
+
+        setTimeout( () => {
+            parrafo.remove(); // Elimina el mensaje de éxito
+
+            resetearFormulario();
+        }, 5000);
+    }, 3000 );
+}
+
+// Función que resetea el formulario 
+
+function resetearFormulario() {
+    formulario.reset();
+
+    iniciarApp();
 }
