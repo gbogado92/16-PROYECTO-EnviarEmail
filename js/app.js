@@ -13,7 +13,6 @@ const mensaje = document.querySelector('#mensaje');
 const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 eventListeners();
-//  Cuando la app arranca 
 function eventListeners() {
     //  Cuando la app arranca 
     document.addEventListener('DOMContentLoaded', iniciarApp);
@@ -23,10 +22,9 @@ function eventListeners() {
     asunto.addEventListener('blur', validarFormulario);
     mensaje.addEventListener('blur', validarFormulario);
 
-    //  Reinicia el formulario 
-    btnReset.addEventListener('click', resetearFormulario);
+    resetBtn.addEventListener('click',  resetearFormulario);
 
-    //  Enviar mail 
+    //  Enviar email 
     formulario.addEventListener('submit', enviarEmail);
 
 }
@@ -99,29 +97,30 @@ function enviarEmail(e) {
     e.preventDefault();
 
     //  Mostrar el spinner 
-
     const spinner = document.querySelector('#spinner');
     spinner.style.display = 'flex';
 
     //  Despues de 3 segundos ocultar el spinner y mostrar el mensaje 
+
     setTimeout( () => {
         spinner.style.display = 'none';
-
+        
         //  Mensaje que dice que se envió correctamente 
         const parrafo = document.createElement('p');
-        parrafo.textContent = 'El mensaje se envió correctamente';
+        parrafo.textContent = 'El mensaje se envio correctamente';
         parrafo.classList.add('text-center', 'my-10', 'p-2', 'bg-green-500', 'text-white', 'font-bold', 'uppercase' );
 
         // Inserta el párrafo antes del spinner 
         formulario.insertBefore(parrafo, spinner);
 
         setTimeout( () => {
-            parrafo.remove(); // Elimina el mensaje de éxito
+            parrafo.remove(); //Elimina el mensaje de exito
 
             resetearFormulario();
         }, 5000);
-    }, 3000 );
-}
+    }, 3000);
+
+} 
 
 // Función que resetea el formulario 
 
