@@ -122,7 +122,8 @@ function enviarEmail(e) {
 
 // Función que resetea el formulario 
 
-function resetearFormulario() {
+function resetearFormulario(e) {
+    e.preventDefault();
     formulario.reset();
 
     iniciarApp();
