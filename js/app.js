@@ -116,7 +116,7 @@ function enviarEmail(e) {
         setTimeout( () => {
             parrafo.remove(); //Elimina el mensaje de exito
 
-            resetearFormulario();
+            resetearFormulario(e);
         }, 5000);
     }, 3000);
 
